@@ -1,0 +1,50 @@
+ <html>                                                                  
+ <head>                                                              
+ <style type="text/css">
+ .green {
+ 	width: 100px;
+ 	height: 100px;
+ 	background: green;
+ }
+ .red {
+ 	width: 100px;
+ 	height: 100px;
+ 	background: red;
+ }
+ #betterDiv {
+ 	width: 98px;
+ 	height: 98px;
+ 	border: 1 black solid;
+ }
+ .purple {
+ 	background: purple;
+ }
+ </style>    
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>          
+ <script type="text/javascript">                                              
+ $(document).ready(function() {
+ 	$("#targetDiv").click(function() {
+ 		if($(this).hasClass('green') ){
+	 		$(this).removeClass('green');
+	 		$(this).addClass('red');	
+ 		} else {
+	 		$(this).removeClass('red');
+	 		$(this).addClass('green');
+ 		}
+ 	});
+ 	$("#betterDiv").click(function() {
+ 		$(this).toggleClass('purple');
+ 	});
+ });                              
+ </script>                                                               
+ </head>                                                                 
+ <body>                                                                  
+   <!-- we will add our HTML content here -->    
+   <a href="">Make it so</a>
+   <div id="targetDiv" class="green"></div>
+   <div id="betterDiv"></div>
+   <div class="Guide">
+   	...
+   </div>
+ </body>                                                                 
+ </html>

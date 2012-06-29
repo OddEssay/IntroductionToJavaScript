@@ -1,0 +1,27 @@
+ <html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>          
+ <script type="text/javascript">                                              
+ $(document).ready(function() {
+ 	$("a").click(function() {
+ 		alert("Hello world!");
+ 	});
+ 	$("div").click(function(){
+ 		alert("You can click anything!");
+ 	});
+ 	$("#greenBox").unbind('click').click(function(){
+ 		alert("You can target an id!");
+ 	});
+ });                              
+ </script>                                                               
+ </head>                                                                 
+ <body>                                                                  
+   <!-- we will add our HTML content here -->    
+   <a href="">Let's look at the example on jquery.com</a>
+   <div style="width: 100px; height: 100px; background: red"></div>  
+   <div id="greenBox" style="width: 100px; height: 100px; background: green"></div>     
+   <div class="Guide">
+   	When adding the click event to the greenbox, you also need to unbind the existing click event if you don't want to trigger both effects.
+   </div>
+ </body>                                                                 
+ </html>
