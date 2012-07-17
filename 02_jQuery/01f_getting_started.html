@@ -5,6 +5,7 @@
  $(document).ready(function() {
  	$("a").click(function() {
  		alert("Hello world!");
+ 		return false;
  	});
  	$("div").click(function(){
  		alert("You can click anything!");
@@ -15,13 +16,8 @@
  });                              
  </script>                                                               
  </head>                                                                 
- <body>                                                                  
-   <!-- we will add our HTML content here -->    
-   <a href="">Let's look at the example on jquery.com</a>
-   <div style="width: 100px; height: 100px; background: red"></div>  
+ <body>                                                    
+   <div style="width: 100px; height: 100px; background: red"><a>Click Me</a></div>  
    <div id="greenBox" style="width: 100px; height: 100px; background: green"></div>     
-   <div class="Guide">
-   	When adding the click event to the greenbox, you also need to unbind the existing click event if you don't want to trigger both effects.
-   </div>
  </body>                                                                 
  </html>
