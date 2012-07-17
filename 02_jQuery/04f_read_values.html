@@ -23,17 +23,12 @@
  <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>          
  <script type="text/javascript">                                              
  $(document).ready(function() {
- 	$("#targetDiv").click(function() {
- 		if($(this).hasClass('green') ){
-	 		$(this).removeClass('green');
-	 		$(this).addClass('red');	
- 		} else {
-	 		$(this).removeClass('red');
-	 		$(this).addClass('green');
- 		}
+ 	$('#pick_option').change(function(){
+ 		$('#targetDiv').removeClass();
+ 		$('#targetDiv').addClass( $(this).val() );
  	});
- 	$("#otherDiv").click(function() {
- 		$(this).toggleClass('purple');
+ 	$('#enter_value').blur(function(){
+ 		$('#otherDiv').css('background-color', $(this).val() );
  	});
  });                              
  </script>                                                               
@@ -41,5 +36,12 @@
  <body>                                          
    <div id="targetDiv" class="green"></div>
    <div id="otherDiv"></div>
+   First Box:
+   <select id="pick_option">
+   	<option value="green">Green</option>
+   	<option value="red">Red</option>
+   </select>
+   Second Box:
+   <input id="enter_value"></input>
  </body>                                                                 
  </html>

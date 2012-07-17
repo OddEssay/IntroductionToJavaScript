@@ -31,7 +31,8 @@
 
 <article >
 		
-		<section class="slide">
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
 			<h2>Getting Started With jQuery</h2>
 <textarea id="code" name="code" class="code" mode="text/html" style="display: none;" runnable="true" globals="$">
  <html>                                                                  
@@ -49,6 +50,7 @@
 		</section>
 
 
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
 <section class="slide">
 			<h2>The Click Event</h2>
 <textarea id="code" name="code" class="code" mode="text/html" style="display: none;" runnable="true" globals="$">
@@ -65,6 +67,7 @@
 </textarea>
 		</section>
 
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
 <section class="slide">
 			<h2>The Click Event and Bubbling</h2>
 <textarea id="code" name="code" class="code" mode="text/html" style="display: none;" runnable="true" globals="$">
@@ -92,6 +95,7 @@ $("a").click(function() {
 </div>
 </section>
 
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
 <section class="slide">
 			<h2>The Click Event and Changing Action</h2>
 <textarea id="code" name="code" class="code" mode="text/html" style="display: none;" runnable="true" globals="$">
@@ -122,6 +126,7 @@ $("#greenBox").unbind('click').click(function(){
 </div>
 </section>
 
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
 <section class="slide">
 	<h2>Selectors in jQuery are the same as CSS</h2>
 	<div class="slide">
@@ -141,6 +146,7 @@ $('#someID');</textarea>
 	</div>
 </section> 
 
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
 <section class="slide">
 	<h2>Special jQuery Selectors</h2>
 		<p>There are special jQuery selectors, for example to select all input, select, and textarea tags in a single call</p>
@@ -156,8 +162,10 @@ $(':hidden');</textarea>
 	</div>
 </section> 
 
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
 <section class="slide">
 	<h2>Using Selectors</h2>
+	<p>Looking at 02_selectors.html</p>	
 <textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
  <html>                                                                  
  <head>                                                                  
@@ -181,9 +189,151 @@ $(':hidden');</textarea>
    <a href="">Last </a>   
  </body>                                                                 
  </html></textarea>
-</selection>
+</section>
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Using Selectors</h2>
+	<div>
+	<p>Select the first element</p>	
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$("a:first").unbind('click').click(function() {
+	alert("Hello world!");
+});</textarea>
+ 	</div>
+ 	<div class="slide">
+	<p>Select the last element</p>	
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$("a:last").unbind('click').click(function() {
+	alert("Goodbye!");
+});</textarea>
+ 	</div>
+ 	<div class="slide">
+	<p>Select the 3rd element using the nth-child</p>	
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$("a:nth(2)").unbind('click').click(function() {
+ 	alert("Nth 2! (Third Item)");
+});</textarea>
+ 	</div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Using Selectors (2)</h2>
+	<div>
+	<p>Rememeber You Can Use The Console, try this.</p>	
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$("a:nth(4)").unbind('click').click(function() {
+	alert("Clicked - But Only For Now");
+});</textarea>
+ 	</div>
+ 	<p>Click The 5th link<p>
+ 	<p>Then reload the page, and click again.<p>
+ 	<div class="slide">
+ 	<h3>Notice The Console Shows You What The Selector Found</h3>
+ 	<p>If debuging, testing selectors can be useful to see if you are actually finding the data you want<p>
+ 	<p>If you over over the console output, it will highlight the block in the page<p>
+ 	<p>Try getting the last two &lt;a&gt; tags with:</p>
+ 	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$('a:gt(4)');</textarea>
+ 	</div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Manipulating The Page</h2>
+ 	<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+ <html>                                                                  
+ <head>                                                              
+ <style type="text/css">
+ .green {
+ 	width: 100px;
+ 	height: 100px;
+ 	background: green;
+ }
+ .red {
+ 	width: 100px;
+ 	height: 100px;
+ 	background: red;
+ }
+ #otherDiv {
+ 	width: 98px;
+ 	height: 98px;
+ 	border: 1 black solid;
+ }
+ .purple {
+ 	background: purple;
+ }
+ </style>    
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>          
+ <script type="text/javascript">                                              
+ $(document).ready(function() {
+ 	
+ });                              
+ </script>                                                               
+ </head>                                                                 
+ <body>                                                                  
+   <!-- we will add our HTML content here -->    
+   <div id="targetDiv" class="green"></div>
+   <div id="otherDiv"></div>
+ </body>                                                                 
+ </html></textarea>
+ 	</div>
+</section>
 
 
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Manipulating The Page</h2>
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$(document).ready(function() {
+ 	$("#targetDiv").click(function() {
+ 		if($(this).hasClass('green') ){
+	 		$(this).removeClass('green');
+	 		$(this).addClass('red');	
+ 		} else {
+	 		$(this).removeClass('red');
+	 		$(this).addClass('green');
+ 		}
+ 	});
+ });</textarea>
+ <p>"this" refers to the element clicked on that raised an event.</p>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>IF / THEN / ELSE</h2>
+	<p>if(true){ //then do this } else { //do this }</p>
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+if($(this).hasClass('green') ){
+	$(this).removeClass('green');
+	$(this).addClass('red');	
+} else {
+	$(this).removeClass('red');
+	$(this).addClass('green');
+}</textarea> 
+<div class="slide">
+	jQuery .hasClass() returns true if the element has the class.
+</div>
+<div class="slide">
+	jQuery .addClass() adds a class to the element.
+</div>
+<div class="slide">
+	jQuery .removeClass() does as you expect, removes the class.
+</div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Toggle Class</h2>
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+ 	$("#otherDiv").click(function() {
+ 		$(this).toggleClass('purple');
+ 	});
+ });</textarea>
+ <p>jQuery makes it even easier, by having a toggle function.</p>
+ <p>If the element doesn't have the class, add it</p>
+ <p>If the element has the class remove it.<p>
+</section>
 
 	<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
