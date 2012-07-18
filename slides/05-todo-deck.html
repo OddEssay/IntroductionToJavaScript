@@ -195,11 +195,84 @@ self.removeTask = function(task){
 	</div>
 </section>
 
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Toggle Visibility</h2>
+ 	<p>We should be able to edit the title and description</p>
+ 	<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<script id="taskItem" type="text/html">
+	<div>
+		<h3 data-bind="text:title, visible: editMode != 'title'"></h3>
+		<input data-bind="value:title,visible: editMode == 'title'"></input>
+		<div data-bind="text: $data.description, visible: editMode != 'description'"></div>
+		<input data-bind="value: $data.description, visible: editMode == 'description'"></input>
+		<button data-bind="click: $parent.removeTask">X</button>
+	</div>
+</script></textarea>
+	<div class="slide">
+		<p>visible: controls when the element is put on display</p>
+	</div>
+	<div class="slide">
+		<p>It needs an observable value to look at, so att to TaskModel</p>
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+self.editMode = ko.observable('none');</textarea>
+	</div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Toggle Visibility (2)</h2>
+ 	<p>Now we have the inputs, we need to toggle to them</p>
+ 	<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<script id="taskItem" type="text/html">
+	<div>
+	<h3 data-bind="text:title,visible: editMode() != 'title', click: editTitle"></h3>
+		<input data-bind="value:title,visible: editMode() == 'title',event: {blur:  save}"></input>
+		<div data-bind="text: $data.description, visible: editMode() != 'description',click: editDescription"></div>
+		<input data-bind="value: $data.description, visible: editMode() == 'description',event: { blur: save}"></input>
+		<button data-bind="click: $parent.removeTask">X</button>
+	</div>
+</script></textarea>
+	<div class="slide">
+		<p>visible: controls when the element is put on display</p>
+	</div>
+	<div class="slide">
+		<p>event: { blur: save}: binds the save method to the blur event.</p>
+	</div>
+	<div class="slide">
+		<p>It needs an observable value to look at, so add to TaskModel</p>
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+self.editTitle = function(){
+	self.editMode('title');
+}
+self.editDescription = function(){
+	self.editMode('description');
+}
+self.save = function(){
+	self.editMode('none');
+}</textarea>
+	</div>
+</section>
 
 
-
-
-
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Mark as Done Checkbox and CSS</h2>
+ 	<p>We want to be able to mark a task as done by using a checkbox and changing the css</p>
+ 	<p>Add to taskItem template:</p>
+ 	<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+Done: <input type="checkbox" data-bind="checked: isDone"></input></textarea>
+	<div class="slide">
+		<p>It needs an observable value to look at, so add to TaskModel</p>
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+self.isDone = ko.observable(false);</textarea>
+	</div>
+	<div class="slide">
+		<p>And edit the containing div in taskItem template</p>
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<div data-bind="style: {textDecoration: isDone() ? 'line-through' : 'none' }"></textarea>
+	</div>
+</section>
 
 
 

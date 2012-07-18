@@ -1,0 +1,71 @@
+ <html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+ <script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+ <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />
+
+ <script type="text/javascript" src="../js/knockout-2.1.0.js"></script>
+
+     
+<script type="text/javascript">      
+function ToDoListModel() {
+	var self = this;
+	self.tasks = ko.observableArray([
+		new TaskModel( {title:'Task 1',description: 'This is Task One'} ),
+		new TaskModel( {title:'Task 2',description: 'This is Task Two'} ),
+		new TaskModel( {title:'Task 3',description: 'This is Task Three'} )
+	]);
+	self.addTask = function() {
+		self.tasks.push(new TaskModel({title:'Task ' + parseInt(self.tasks().length + 1),description:''}));
+	}
+	self.removeTask = function(task){
+		self.tasks.remove(task);
+	}
+}
+function TaskModel(data) {
+	if(!data){ console.error('No data given to TaskModel'); }
+	var self = this;
+	self.title = data.title ? ko.observable(data.title) : ko.observable();
+	self.description = data.description ? ko.observable(data.description) : ko.observable();
+	self.editMode = ko.observable('none');
+	self.editTitle = function(){
+		self.editMode('title');
+	}
+	self.editDescription = function(){
+		self.editMode('description');
+	}
+	self.save = function(){
+		self.editMode('none');
+	}
+	self.isDone = ko.observable(false);
+}
+
+var myToDoList = new ToDoListModel();                                       
+$(function(){
+	ko.applyBindings(myToDoList);
+});                              
+</script>                                                               
+
+</head>                                                                 
+
+<body>                                                                  
+	<div id="todoList">
+		<ul data-bind="template: {name: 'taskItem', foreach: tasks}"></ul>
+		<button data-bind="click:addTask">Add Task</button>
+	</div> 
+</body>                                                                 
+
+<script id="taskItem" type="text/html">
+	<div data-bind="style: {textDecoration: isDone() ? 'line-through' : 'none' }">
+		<h3 data-bind="text:title,
+		visible: editMode() != 'title',
+		click: editTitle"></h3>
+		<input data-bind="value:title,visible: editMode() == 'title',event: {blur:  save}"></input>
+		<div data-bind="text: $data.description, visible: editMode() != 'description',click: editDescription"></div>
+		<input data-bind="value: $data.description, visible: editMode() == 'description',event: { blur: save}"></input>
+		Done: <input type="checkbox" data-bind="checked: isDone"></input>
+		<button data-bind="click: $parent.removeTask">X</button>
+	</div>
+</script>
+
+</html>
