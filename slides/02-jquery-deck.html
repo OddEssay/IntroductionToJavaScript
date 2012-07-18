@@ -335,6 +335,93 @@ if($(this).hasClass('green') ){
  <p>If the element has the class remove it.<p>
 </section>
 
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Read Inputs</h2>
+	<p>Looking at 04_read_values.html</p>
+	<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+ <html>                                                                  
+ <head>                                                              
+ <style type="text/css">
+ .green {
+ 	width: 100px;
+ 	height: 100px;
+ 	background: green;
+ }
+ .red {
+ 	width: 100px;
+ 	height: 100px;
+ 	background: red;
+ }
+ #otherDiv {
+ 	width: 98px;
+ 	height: 98px;
+ 	border: 1 black solid;
+ }
+ .purple {
+ 	background: purple;
+ }
+ </style>    
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>          
+ <script type="text/javascript">                                              
+ $(document).ready(function() {
+ 	
+ });                              
+ </script>                                                               
+ </head>                                                                 
+ <body>                                          
+   <div id="targetDiv" class="green"></div>
+   <div id="otherDiv"></div>
+   First Box:
+   <select id="pick_option">
+   	<option value="red">Red</option>
+   	<option value="green">Green</option>
+   </select>
+   Second Box:
+   <input id="enter_value"></input>
+ </body>                                                                 
+ </html></textarea>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Select Input and Change Event</h2>
+	<p>First we add some code to change the class when the select option changes.</p>
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+ $(document).ready(function() {
+ 	$('#pick_option').change(function(){
+ 		$('#targetDiv').removeClass();
+ 		$('#targetDiv').addClass( $(this).val() );
+ 	});</textarea>
+ 	<p class="slide">The change() event is like click, only when the value of an input changes.</p>
+ 	<p class="slide">The removeClass() function removes all classes.</p>
+ 	<div class="slide">
+ 		<p>$(this).val() gets the current value of the input.</p>
+ 		<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<option value="green">Green</option></textarea>
+   		<p>The value is the html value="" attribute, which defaults to the label if not set.</p>
+   	</div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Select Input and Change Event</h2>
+	<p>First we add some code to change the class when the select option changes.</p>
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$('#enter_value').blur(function(){
+ 	$('#otherDiv').css('background-color', $(this).val() );
+});</textarea>
+ 	<p class="slide">The blur() event triggers when you leave an input and it loses focus.</p>
+ 	<p class="slide">The css() function sets the value of a specific css property.</p>
+</section>
+
+
+
+
+
+<!-- #### ### ## # End Of Slides # ## ### ### -->
 	<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
 

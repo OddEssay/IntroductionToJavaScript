@@ -1,0 +1,36 @@
+ <html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+ <script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+ <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />	
+
+     
+ <script type="text/javascript">                                              
+
+ $(document).ready(function() {
+ 	$('#datepicker').datepicker({
+ 		minDate: -20,
+ 		maxDate: "+1M +10D"
+ 	});
+ 	$( "#format" ).change(function() {
+		$( "#datepicker" ).datepicker( "option", "dateFormat", $( this ).val() );
+	});
+ });                              
+ </script>                                                               
+ </head>                                                                 
+ <body>                                                                  
+	
+Date = <input id="datepicker" type="text"></input>
+
+<p>Format options:<br />
+	<select id="format">
+		<option value="mm/dd/yy">Default - mm/dd/yy</option>
+		<option value="yy-mm-dd">ISO 8601 - yy-mm-dd</option>
+		<option value="d M, y">Short - d M, y</option>
+		<option value="d MM, y">Medium - d MM, y</option>
+		<option value="DD, d MM, yy">Full - DD, d MM, yy</option>
+		<option value="'day' d 'of' MM 'in the year' yy">With text - 'day' d 'of' MM 'in the year' yy</option>
+	</select>
+
+ </body>                                                                 
+ </html>

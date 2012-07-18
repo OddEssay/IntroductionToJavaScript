@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Part Three - Getting Started With jQuery UI</title>
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Replace path with correct path to deck.core.css. -->
+	<link rel="stylesheet" href="core/deck.core.css" type="text/css">
+	<link rel="stylesheet" href="extensions/codemirror/deck.codemirror.css">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="core/deck.core.css">
+	<link rel="stylesheet" href="extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="extensions/status/deck.status.css">
+	<link rel="stylesheet" href="extensions/hash/deck.hash.css">
+	
+	<!-- Theme CSS files (menu swaps these out) -->
+	<link rel="stylesheet" id="style-theme-link" href="themes/style/SWISS.css">
+	<link rel="stylesheet" id="transition-theme-link" href="themes/transition/horizontal-slide.css">
+
+
+	<link rel="stylesheet" href="extensions/codemirror/themes/default.css">
+	
+	<!-- Replace path with correct path to Modernizr file. -->
+	<script src="modernizr.custom.js"></script>
+</head>
+<body class="deck-container">
+
+<article >
+		
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Getting Started With jQuery UI</h2>
+	<p>We are now including an additional script in our &lt;head&gt; to load jquery-ui</p>
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+ <script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script></textarea>
+ <div class="slide">
+ 	<p>We also include a theme pack, which contains css and some images - which you can customize on the site</p>
+
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+ <link type="text/css" href="../css/themename/jquery-ui-1.8.21.custom.css" rel="Stylesheet" /></textarea>
+ </div>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Sortable Lists</h2>
+	<p>Our first example 01_sortable.html looks very much like our list of links from the last section</p>
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+ <html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+ <script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+ <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />	
+
+     
+ <script type="text/javascript">                                              
+
+ $(document).ready(function() {
+ 	
+ 	$("li").unbind('click').click(function() {
+ 		alert("Pop!");
+ 	});
+
+ 	$("li:first").unbind('click').click(function() {
+ 		alert("Hello world!");
+ 	});
+
+ 	$("li:last").unbind('click').click(function() {
+ 		alert("Goodbye!");
+ 	});
+
+ 	$("li:nth(2)").unbind('click').click(function() {
+ 		alert("Nth 2!");
+ 	});
+
+ });                              
+ </script>                                                               
+ </head>                                                                 
+ <body>                                                                  
+<style>
+	#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+	#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+	#sortable li span { position: absolute; margin-left: -1.3em; }
+</style>
+
+<ul id="sortable">
+	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
+	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
+	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
+	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
+	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
+	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
+	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
+</ul>
+
+
+
+ </body>                                                                 
+ </html></textarea>
+ </div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Basic Sortable</h2>
+	<p>To make the list sortable takes one line of JavaScript</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$( "#sortable" ).sortable();</textarea>
+	<p>Try it on the console first if you want</p>
+	<div class="slide">
+		<h3>Something isn't right...</h3>
+		<p>Drag the first item to the end of the list and click it.</p>
+		<p>It still behaves as it was first set up, the element has moved but the event was already bound.</p>
+	</div>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Better Sortable</h2>
+	<p>First, as we want to bind multiple times, let's wrap that section of code in a function, and call it once right at the start.</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+doBinding = function(){
+ 	$("li").unbind('click').click(function() {
+ 		alert("Pop!");
+ 	});
+
+ 	$("li:first").unbind('click').click(function() {
+ 		alert("Hello world!");
+ 	});
+
+ 	$("li:last").unbind('click').click(function() {
+ 		alert("Goodbye!");
+ 	});
+
+ 	$("li:nth(2)").unbind('click').click(function() {
+ 		alert("Nth 2!");
+ 	});
+ 	console.log('Binding done');
+ }
+ $(document).ready(function() {
+ 	
+ 	doBinding();
+
+ }); ;</textarea>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Better Sortable In Detail</h2>
+	<p>Here we assign a function to a variable so we can call it where ever we want.</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+doBinding = function(){
+ 	// Do Some Code
+ }</textarea>
+ <div class="slide">
+<p>Then we call that function to trigger the code for the first time</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+doBinding();</textarea>
+</div>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Better Sortable In Detail (2)</h2>
+	<p>Next we add a parameter to the sortable() call</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$(function() {
+		$( "#sortable" ).sortable(  {
+			stop: function() {
+				doBinding();
+			}
+		} );
+	} );</textarea>
+
+<p>The stop option is fired when the sortable item has finished moving.</p>
+
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Better Sortable In Detail (3)</h2>
+	<p>Interacting with the sortable object</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$(function() {
+	$( "#sortable" ).sortable( {
+		start: function(event,ui) {
+			ui.item.addClass('ui-state-active');
+		},
+		stop: function(event,ui) {
+			ui.item.removeClass('ui-state-active');
+			doBinding();
+		}
+	});
+} );</textarea>
+
+<p>This time we pass in two parameters to the function, event and ui</p>
+<p>ui.item is the element been passed around, so we can interact with it</p>
+
+</section>
+
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Two Sortable Lists</h2>
+	<p>Looking at 02_two_sortable_lists.html you will see two sortable lists, but they don't interact with each other.</p>
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+ <html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+ <script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+ <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />	
+
+     
+ <script type="text/javascript">                                              
+
+ $(document).ready(function() {
+ 	
+ $( "#sortable1, #sortable2" ).sortable();
+
+ });                              
+ </script>                                                               
+ </head>                                                                 
+ <body>                                                                  
+<style>
+	#sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
+	#sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+</style>
+
+<ul id="sortable1">
+	<li class="ui-state-default">Item 1</li>
+	<li class="ui-state-default">Item 2</li>
+	<li class="ui-state-default">Item 3</li>
+	<li class="ui-state-default">Item 4</li>
+	<li class="ui-state-default">Item 5</li>
+</ul>
+
+<ul id="sortable2">
+	<li class="ui-state-highlight">Item 1</li>
+	<li class="ui-state-highlight">Item 2</li>
+	<li class="ui-state-highlight">Item 3</li>
+	<li class="ui-state-highlight">Item 4</li>
+	<li class="ui-state-highlight">Item 5</li>
+</ul>
+
+
+ </body>                                                                 
+ </html></textarea>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Connecting Sortables</h2>
+	<p>The connectWith option let's us define a relationship using a selector.</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$( "#sortable1, #sortable2" ).sortable({
+	connectWith: ".connectedSortable"
+})</textarea>
+
+<p>In this case, '.connectedSortable' is a class (Note the dot)</p>
+<div class="slide">
+	<p>Don't forget to add the class to the list container</p>
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<ul id="sortable1" class="connectedSortable">
+	...
+</ul>
+<ul id="sortable2" class="connectedSortable">
+	...
+</ul></textarea>
+</div>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Date Selector</h2>
+	<p>jQuery UI includes an easy to use rich date selector.</p>
+	<p>Start with 03_date_selector.html</p>
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+ <html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+ <script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+ <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />	
+
+     
+ <script type="text/javascript">                                              
+
+ $(document).ready(function() {
+ 	
+ });                              
+ </script>                                                               
+ </head>                                                                 
+ <body>                                                                  
+	
+Date = <input id="date_value" type="text"></input>
+
+
+ </body>                                                                 
+ </html></textarea>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Date Picker</h2>
+	<p>You can add this to any form element with a single call to datepicker()</p>
+	<p>Try it on the console first.</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$('#datepicker').datepicker();</textarea>
+
+<div class="slide">
+	<p>Try with some options, minDate and maxDate define a range</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$('#date_value').datepicker({ minDate: -20, maxDate: "+1M +10D" });</textarea>
+<p>In this case, minus 20 days before. And in one month, 10 days time as the max</p>
+</div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Date Picker Formatting</h2>
+	<p>Now let's create a drop down select menu and use it to set the dateFormat option each time it changes.</p>
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<p>Format options:<br />
+	<select id="format">
+		<option value="mm/dd/yy">Default - mm/dd/yy</option>
+		<option value="DD, d MM, yy">Full - DD, d MM, yy</option>
+		<option value="'day' d 'of' MM 'in the year' yy">With text - 'day' d 'of' MM 'in the year' yy</option>
+	</select></textarea>
+
+<div class="slide">
+	<p>Then we enable the change event to set the option of the datepicker</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$( "#format" ).change(function() {
+		$( "#datepicker" ).datepicker( "option", "dateFormat", $( this ).val() );
+	});</textarea>
+	<p>This sets a single option, dateFormat, to the value of the element triggering the event's value.</p>
+</div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Slider</h2>
+	<p>jQuery UI includes a slider widget.</p>
+	<p>Start with 04_slider.html</p>
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+ <html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+ <script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+ <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />	
+
+ <script type="text/javascript">                                              
+
+ $(document).ready(function() {
+ 	
+ });                              
+ </script>                                                               
+ </head>                                                                 
+ <body>                                                                  
+
+<div id="slider"></div>
+
+ </body>                                                                 
+ </html></textarea>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Adding a Slider</h2>
+	<p>You might guess from past examples that to make an element a slider you simply call the slider() method on it.</p>
+	<p>Try it on the console first.</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$('#slider').slider();</textarea>
+
+<div class="slide">
+	<p>To get the value of the slider, you call the 'value' option, like this</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$('#slider').slider('value');</textarea>
+<p>Try it on the console, you'll see if you move it each time you make the call the value by default goes from 0-100 as a percentage.</p>
+</div>
+<div class="slide">
+	<p>To set the value, pass a second parameter to the value option</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$('#slider').slider('value',50);</textarea>
+<p>Try with a few values.	</p>
+</div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Slider Events</h2>
+	<p>Like other jQuery UI widgets, there are lot's of events you can bind too.</p>
+	<p>Add a slide function like this:</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$('#slider').slider({
+	slide: function( event, ui ) {
+		$( "#amount" ).val( ui.value );
+	}
+});</textarea>
+
+<div class="slide">
+	<p>You'll need to also enter the target for output.</p>
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+Value of Slider: <input id="amount"></input></textarea>
+</div>
+<div class="slide">
+	<p>To make this work both ways, you could bind an event to the input too.</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+$('#amount').change(function(){
+	$('#slider').slider( 'value' , $(this).val() );
+});</textarea>
+</div>
+</section>
+
+
+
+<!-- #### ### ## # End Of Slides # ## ### ### -->
+	<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+	<p class="deck-status">
+		<span class="deck-status-current"></span>
+		/
+		<span class="deck-status-total"></span>
+	</p>
+
+	<form action="." method="get" class="goto-form">
+		<label for="goto-slide">Go to slide:</label>
+		<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+		<datalist id="goto-datalist"></datalist>
+		<input type="submit" value="Go">
+	</form>
+	
+	<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+</article>
+
+<!-- Other extension HTML snippets go here, at the bottom of the deck container. -->
+
+<!-- Update these paths to point to the correct files. -->
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="core/deck.core.js"></script>
+<script src="extensions/codemirror/codemirror.js"></script>
+
+<!-- javascript -->
+<script src="core/deck.core.js"></script>
+<script src="extensions/hash/deck.hash.js"></script>
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+
+<script src="extensions/codemirror/mode/javascript/javascript.js"></script>
+
+<!-- html mode (note html mode requires xml, css and javascript) -->
+<script src="extensions/codemirror/mode/xml/xml.js"></script>
+<script src="extensions/codemirror/mode/css/css.js"></script>
+<script src="extensions/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+<!-- Plugin code -->
+<script src="extensions/codemirror/deck.codemirror.js"></script>
+
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	});
+</script>
+</body>
+</html>

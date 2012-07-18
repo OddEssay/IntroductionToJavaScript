@@ -1,0 +1,33 @@
+ <html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+ <script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+ <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />
+
+ <script type="text/javascript" src="../js/knockout-2.1.0.js"></script>
+
+     
+<script type="text/javascript">      
+function ToDoListModel() {
+	var self = this;
+	self.tasks = ko.observableArray(['Task One','Task Two','Task Three']);
+}
+
+
+var myToDoList = new ToDoListModel();                                       
+$(function(){
+	ko.applyBindings(myToDoList);
+});                              
+</script>                                                               
+
+</head>                                                                 
+
+<body>                                                                  
+	<div id="todoList">
+		<ul data-bind="foreach: tasks">
+			<li data-bind="text: $data"></li>
+		</ul>
+	</div> 
+</body>                                                                 
+
+</html>

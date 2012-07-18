@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Building A ToDo List</title>
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Replace path with correct path to deck.core.css. -->
+	<link rel="stylesheet" href="core/deck.core.css" type="text/css">
+	<link rel="stylesheet" href="extensions/codemirror/deck.codemirror.css">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="core/deck.core.css">
+	<link rel="stylesheet" href="extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="extensions/status/deck.status.css">
+	<link rel="stylesheet" href="extensions/hash/deck.hash.css">
+	
+	<!-- Theme CSS files (menu swaps these out) -->
+	<link rel="stylesheet" id="style-theme-link" href="themes/style/SWISS.css">
+	<link rel="stylesheet" id="transition-theme-link" href="themes/transition/horizontal-slide.css">
+
+
+	<link rel="stylesheet" href="extensions/codemirror/themes/default.css">
+	
+	<!-- Replace path with correct path to Modernizr file. -->
+	<script src="modernizr.custom.js"></script>
+</head>
+<body class="deck-container">
+
+<article >
+		
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Build A ToDo List - Why?</h2>
+	<ul>
+		<li class="slide">Simple, but covers lots of features</li>
+		<li class="slide">Doesn't need any domain knowledge</li>
+		<li class="slide">Easy to build in a progressive fashion</li>
+	</ul>
+ <div class="slide">
+<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+ <script type="text/javascript" src="../js/knockout-2.1.0.js"></script></textarea>
+
+ 	<p>There is a first exampe in 01_basic.html</p>
+
+ </div>
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Observable Arrays</h2>
+	<p>Like observable values, observableArrays have lots of inbuilt features but for lists of items.</p>
+ <div class="slide">
+ 	<p>Start by adding an array of data to the ToDoListModel</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+self.tasks = ko.observableArray(['Task One','Task Two','Task Three']);</textarea>
+ </div>
+ <div class="slide">
+ 	<p>Next inside todo list div</p>
+ 	<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+	<div id="taskList">
+		<ul data-bind="foreach: tasks">
+			<li data-bind="text: $data"></li>
+		</ul>
+	</div></textarea>
+ </div>
+</section>
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>More Complex Observable Arrays</h2>
+ <div class="slide">
+ 	<p>Start by adding an array of data to the ToDoListModel</p>
+<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+self.tasks = ko.observableArray([
+	{title:'Task One',description: 'This is Task One'},
+	{title:'Task Two',description: 'This is Task Two'},
+	{title:'Task One',description: 'This is Task Three'}
+]);</textarea>
+ </div>
+ <div class="slide">
+ 	<p>Next inside todo list div</p>
+ 	<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+	<div id="taskList">
+		<ul data-bind="foreach: tasks">
+			<li data-bind="text: title"></li>
+		</ul>
+	</div></textarea>
+ </div>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Templates</h2>
+ 	<p>Once you start foreach loops inside foreach loops things can quickly get complicated, so let's move the taskItem rendering to a template.</p>
+ 	<p>At the bottom of the page (Below &lt;body&gt;)</p>
+ 	<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<script id="taskItem" type="text/html">
+	<li data-bind="text:title"></li>
+	<b data-bind="text: $data.description"></b>
+</script></textarea>
+	<div class="slide">
+		<p>Notice the type="text/html" - that stops it been evaluated by the browser</p>
+	</div>
+	<div class="slide">
+		<p>And replace the &lt;li&gt; tag in the body with the following:</p>
+		<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<ul data-bind="template: {name: 'taskItem', foreach: tasks}"></ul></textarea>
+	</div>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>More Models</h2>
+ 	<p>Static data is pretty useless, so let's make some taskModels</p>
+ 	<p>Create a new Model just below the existing ToDoListModel</p>
+ 	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+function TaskModel(data) {
+	if(!data){ console.error('No data given to TaskModel'); }
+	var self = this;
+	self.title = data.title ? ko.observable(data.title) : ko.observable();
+	self.description = data.description ? ko.observable(data.description) : ko.observable();
+}</textarea>
+	<div class="slide">
+		<p>And replace the &lt;li&gt; tag in the body with the following:</p>
+		<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<ul data-bind="template: {name: 'taskItem', foreach: tasks}"></ul></textarea>
+	</div>	
+	<div class="slide">
+		<p>And update the list of tasks in ToDoListModel to create three instances of the TaskModel</p>
+		<textarea id="code" name="code" class="code" mode="template" style="display: none;" globals="$">
+self.tasks = ko.observableArray([
+		new TaskModel( {title:'Task 1',description: 'This is Task One'} ),
+		new TaskModel( {title:'Task 2',description: 'This is Task Two'} ),
+		new TaskModel( {title:'Task 3',description: 'This is Task Three'} )
+	]);</textarea>
+	</div>
+	
+</section>
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Adding New Models To The List</h2>
+ 	<p>Now let's add some more Models to the list by clicking a button</p>
+ 	<p>Add the following method to the ToDoListModel</p>
+ 	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+self.addTask = function() {
+	self.tasks.push(new TaskModel({title:'Task ' + parseInt(self.tasks().length + 1),description:''}));
+}</textarea>
+	<div class="slide">
+		<p>.push adds a new element to the end of an array<br />
+			This is done directly to the observableArray</p>
+	</div>
+	<div class="slide">
+		<p>.length returns the number of elements in an array<br />
+			This is done on the array returned by self.tasks()</p>
+	</div>
+	<div class="slide">
+		<p>parseInt() forces the output into an Interger value<br />
+			Because + both concatenates strings and performs math sometimes you get odd results.<br />
+			eg, if you see 11 rather then 2, 1111 rather then 4</p>
+	</div>
+</section>
+
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Button Click</h2>
+ 	<p>To bind a the new function to a button simply add the following html</p>
+ 	<textarea id="code" name="code" class="code" mode="text/html" style="display: none;" globals="$">
+<button data-bind="click:addTask">Add Task</button></textarea>
+</section>
+
+
+<!-- ---------------- SECTION ------------------------------------------------------------------------------------------------- -->
+<section class="slide">
+	<h2>Removing Models To The List</h2>
+ 	<p>Add the following method to the ToDoListModel</p>
+ 	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+self.removeTask = function(task){
+		self.tasks.remove(task);
+	}</textarea>
+	<div class="slide">
+		<p>.remove() removes the matching object from the observableArray</p>
+	</div>
+	<div class="slide">
+		<p>Inside the taskItem template, adding a button</p>
+	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;" globals="$">
+<button data-bind="click: $parent.removeTask">X</button></textarea>
+		<p class="slide">$parent.removeTask calls the method on it's parent (ToDoListModel) and gives it's self as the parameter</p>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+<!-- #### ### ## # End Of Slides # ## ### ### -->
+	<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+	<p class="deck-status">
+		<span class="deck-status-current"></span>
+		/
+		<span class="deck-status-total"></span>
+	</p>
+
+	<form action="." method="get" class="goto-form">
+		<label for="goto-slide">Go to slide:</label>
+		<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+		<datalist id="goto-datalist"></datalist>
+		<input type="submit" value="Go">
+	</form>
+	
+	<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+</article>
+
+<!-- Other extension HTML snippets go here, at the bottom of the deck container. -->
+
+<!-- Update these paths to point to the correct files. -->
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="core/deck.core.js"></script>
+<script src="extensions/codemirror/codemirror.js"></script>
+
+<!-- javascript -->
+<script src="core/deck.core.js"></script>
+<script src="extensions/hash/deck.hash.js"></script>
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+
+<script src="extensions/codemirror/mode/javascript/javascript.js"></script>
+
+<!-- html mode (note html mode requires xml, css and javascript) -->
+<script src="extensions/codemirror/mode/xml/xml.js"></script>
+<script src="extensions/codemirror/mode/css/css.js"></script>
+<script src="extensions/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+<!-- Plugin code -->
+<script src="extensions/codemirror/deck.codemirror.js"></script>
+
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	});
+</script>
+</body>
+</html>

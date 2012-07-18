@@ -1,0 +1,30 @@
+ <html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+ <script type="text/javascript" src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+ <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />
+
+ <script type="text/javascript" src="../js/knockout-2.1.0.js"></script>
+
+     
+<script type="text/javascript">      
+function AppViewModel() {
+	this.firstName = ko.observable("Bert");
+	this.lastName = ko.observable("Bertington");
+}
+var myAppViewModel = new AppViewModel();                                       
+$(function(){
+	ko.applyBindings(myAppViewModel);
+});                              
+</script>                                                               
+</head>                                                                 
+<body>                                                                  
+	
+	<p>First name: <strong data-bind="text: firstName"></strong></p>
+	<p>Last name: <strong data-bind="text: lastName"></strong></p>
+	<div>
+		Enter first name: <input data-bind="value:firstName"><br />
+		Enter last name: <input data-bind="value:lastName">
+	</div>
+</body>                                                                 
+</html>
